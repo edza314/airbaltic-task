@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS airbaltic.users CASCADE;
+DROP SCHEMA IF EXISTS airbaltic;
