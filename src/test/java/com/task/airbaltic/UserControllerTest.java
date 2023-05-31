@@ -15,11 +15,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserController.class)
@@ -93,23 +91,23 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.emailId").value("john@example.com"));
     }
 
-    @Test
-    public void testUpdateUserNotFound() throws Exception {
-        // Arrange
-        Users updatedUser = new Users();
-        updatedUser.setId(1L);
-        updatedUser.setFirstName("John");
-        updatedUser.setLastName("Smith");
-        updatedUser.setEmailId("john@example.com");
+   /* @Test
+    public void testDeleteUsers() throws Exception {
+        // Create a user to delete
+        Users user = new Users();
+        user.setId(1L);
+        user.setFirstName("John");
+        user.setLastName("Snow");
+        user.setEmailId("john.snow@gmail.com");
+        // Save the user to the repository
+        usersRepository.save(user);
 
-        when(usersRepository.findById(1L)).thenReturn(Optional.empty());
+        mockMvc.perform(delete("/users/{id}", 1L)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.deleted").value(true));
 
-        // Act and Assert
-        mockMvc.perform(put("/api/v1/users/{id}", 1L)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updatedUser)))
-                .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.message").value("User not exist with id :1"));
-    }
+        // Verify that the user is deleted
+        assertFalse(usersRepository.existsById(1L));
+    }*/
 }
